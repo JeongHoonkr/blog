@@ -1,0 +1,147 @@
+= 트랜잭션(Transaction)
+
+=== Jim Gray(1944-2007)
+* 세계 최초의 관계형 데이터베이스 System-R 개발
+* 트랜잭션 개념 제안
+* 2 Phase Locking
+* Granularity Locking
+* 튜링상과 찰스배비지상 수상
+
+=== RDBMS
+* InnoDB는 레코드 기반 저장구조 cf. column store (Amazon Redshift)
+* RID (page #, slot #)를 통해 레코드 접근
+* B-tree 기반 클러스터링 인덱스
+* Secondary Index는 PK를 참조함
+* 레코드 기반 잠금을 지원하지만 실제 물리적 잠금은 인덱스에 걸림
+
+=== Transcation 성질
+* A(Atomicity)
+** All Or, Nothing 성질을 가짐
+* C(Consistency)
+** 주로 분산 DB에서 나오는 이야기
+* I(Isolation)
+** 고립성
+* D(Durability)
+
+=== CAP 이론
+* C(Consistency)
+** 일관성 => 요청에 따라 서버마다 응답이 다름
+* A(Availability)
+** 가용성 => 요청이 성공, 실패 상관없이 무조건 응답해줌
+* P(Partition Tolerence)
+* 세 개 조건을 만족하는 서버는 없음
+* 관계형 데이터베이스는 P의 성질을 포기함
+* NoSQL은 C의 성질을 포기함
+
+=== Eventual Consistency
+* 미래 언젠가 일관성이 보장되지만 그 시점이 정해지지 않음
+* NoSQL은 이 성질을 지킴 => 은행권에서 사용하지 못함
+* 관계형 데이터베이스는 이 성질을 지키지 않음
+* S3, DynamoDB등 많은 AWS 제품군이 이를 지원
+
+=== NoSQL 성질
+* BA(Basically Available)
+* S(Soft State)
+* E(Eventual Consistency)
+
+=== 트랜잭션과 Serial Schedule
+* 가장 쉽게 ACID를 지원하는 방법은?
+** 한 번에 하나씩 트랙잭션이 실행함
+
+===== Serial Schedule
+* 세 트랜잭션 A, B, C가 있을 때 한 번에 하나씩 실행했을 때 가능한 결과들의 집합
+
+=== Serializable
+* 실제 데이터베이스의 트랜잭션 결과가 Serial Schedule의 부분집합인 경우 Serializable이라고 함(= 누가 먼저 일어난 일인지 알 수 없지만 그 중에서 하나 나오면 좋은 상태임)
+
+=== Lock 없이 트랙잭션을 동시에 실행한다면?
+
+===== Lost Update Problem
+* 두 개의 트랜잭션이 동시에 한 아이템의 데이터를 변경했을 때 발생하는 문제점
+* 트랜잭션을 지원하는 데이터베이스에서는 발생하면 안 됨
+
+===== Problem 1 => Dirty Read Problem
+* 하나의 트랜잭션에서 변경한 값을 다른 트랜잭션에서 읽을 때 발생하는 문제
+
+===== Problem 2 => Non-repeatable Read Problem
+* 한 트랜잭션에서 같은 값을 두 번 읽었을 때 각각 다른 값이 읽히는 경우
+* 어플리케이션 특성에 따라 바른지, 안 바른지 판단 할 수 있음
+
+===== Problem 3 => Phantom Read Problem
+* 주로 통계나 분석, aggregation function 등을 수행하는 쿼리에서 잘못된 값이 들어오는 경우
+
+=== Transaction Isolation Level
+
+===== ANSI SQL (SQL92)
+* 데이터베이스마다 지원하는 레벨이 다름
+* MySQL과 MS-SQL은 4가지 모두 지원
+* MySQL default: Repeatable Read
+
+===== Isolation Level 확인 및 변경(MySQL 5.7 이전)
+* READ-UNCOMMITTED
+* READ-COMMITTED
+* REPEATABLE READ
+* SERIALIZABLE
+
+[source, sql]
+----
+SHOW VARIABLES LIKE 'tx_isolation';
+SET TRANSACTION ISOLATION LEVEL 레벨;
+START TRANSACTION;
+-- QUERY START
+COMMIT | ROLLBACK;
+----
+
+===== Isolation Level 확인 및 변경(MySQL 5.7)
+* READ-UNCOMMITTED
+* READ-COMMITTED
+* REPEATABLE-READ
+* SERIALIZABLE
+
+[source, sql]
+----
+SELECT @@GLOBAL.transaction_isolation, @@transaction_isolation;
+SET GLOBAL transaction_isolation='REPEATABLE-READ';
+SET SESSION transaction_isolation='SERIALIZABLE';
+----
+
+=== MVCC
+* MySQL의 InnoDB는 오라클과 같이 MVCC를 내부적으로 사용함
+** 업데이트 중에도 읽기가 블록되지 않음
+** 읽기 내용은 격리 수준에 따라 달라질 수 있음
+** 업데이트시 X락이 인덱스에 걸림
+** 업데이트시 락의 대상이 실제 업데이트 아이템보다 더 클 수 있음
+** 동시 업데이트를 수행시 나중 트랜잭샌은 블록됨. 일정 시간 지나면 Lock Timeout이 발생함
+** 업데이트시 이전 값을 Undo Log로 롤백 세그먼트에 유지함. 이 값은 롤백시와 격리 수준에 따라 다른 값을 읽기 위해 사용됨
+
+===== Repeatable Read
+* MySQL의 기본 동작 모드
+* 첫 번째 읽기에 스냅샷을 생성함
+* 이후 동일 트랜잭션에서는 스냅샷에서부터 값을 읽음
+* 잠금의 대상은 unique index, secoendary index의 유무에 따라 달라짐
+
+===== Read Uncommitted
+* 다른 트랜잭션에서 바꾼 값이 트랜잭션 중간에도 반영됨
+* Read Committed와는 다른 값이 읽힐 수 있음
+* 일반적으로 그냥 최신 업데이트 값을 읽음
+* 상당히 위험함
+
+===== Serializable
+* MySQL에서는 모든 SELECT문에 S락이 걸림
+* Repeatable Read에서도 Phantom 문제가 발생하지 않으므로 많이 사용하지 않음
+* 역시나 매우 위험함
+
+===== 기타
+* MySQL에서는 트랜잭션 레벨에 따라 binlog 형태가 바뀜
+* 이전 버전에서는 row 레벨이 용량과 성능문제가 있어서 주로 mixed나 statement를 사용했는데 5.7부터 row 레벨에 많은 개선이 있었다고 함
+
+===== 초급 Tip
+* AutoCommit을 끄자(특히 JDBC 등에서 주의)
+* 긴 트랜잭션은 데드락의 원인
+* 배치 작업 중간에 커밋을 하자
+* 아무것도 하지 않은 트랜잭션 및 커넥션의 주의
+* 트랜잭션 중간에 사용자 입력이 존재하면 안됨
+* 서버 모니터링은 주기적으로 하자
+
+
+
