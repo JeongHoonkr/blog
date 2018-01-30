@@ -58,7 +58,7 @@ $ git remote add upstream https://github.com/code-squad/swift-laddergame.git
 $ git remote -v : 원격 저장소 브랜치 목록 확인
 ----
 
-* 기본 base저장소와 sync (PR 보낸 내용을 자신의 기본 저장소와 합침
+* 기본 base 저장소와 sync (PR 보낸 내용을 자신의 기본 저장소와 합침
 
 [source, shell]
 ----

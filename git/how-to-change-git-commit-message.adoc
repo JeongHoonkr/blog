@@ -1,7 +1,6 @@
 = Git Rebase -i를 이용하여 Git Commit 메세지 변경하기
-
 ===== 문제
-* Git Commit 메세지를 변경하고 싶은데 어떻게 해야할까?
+* Git Commit 메세지를 변경하고 싶은데 어떻게 해야 할까?
 
 ===== 해결
 * 마지막 커밋 메세지를 "3" -> "33" 으로 바꾸고 싶음
@@ -21,13 +20,13 @@ $ git push -f
 
 image::../git/image/git-changing-message-2.png[]
 
-* 아래에서 두번째 커밋 메세지를 "1" -> "1111"으로 바꾸고 싶음
+* 아래에서 두 번째 커밋 메세지를 "1" -> "1111"으로 바꾸고 싶음
 
 [source, shell]
 ----
-yuaming@yuaming-pc  ~/dev/workspace/rebase-test   master  git rebase -i HEAD~3
+yuaming@yuaming-pc � ~/dev/workspace/rebase-test � � master � git rebase -i HEAD~3
 
-yuaming@yuaming-pc  ~/dev/workspace/rebase-test  ➦ c40da4e >R>  git commit --amend
+yuaming@yuaming-pc � ~/dev/workspace/rebase-test � ? c40da4e >R> � git commit --amend
 ----
 
 [source, shell]
@@ -59,11 +58,11 @@ pick f8483fc 33
 
 [source, shell]
 ----
-yuaming@yuaming-pc  ~/dev/workspace/rebase-test  ➦ 0a8829b >R>  git rebase --continue
+yuaming@yuaming-pc � ~/dev/workspace/rebase-test � ? 0a8829b >R> � git rebase --continue
 
 Successfully rebased and updated refs/heads/master.
 
-yuaming@yuaming-pc  ~/dev/workspace/rebase-test   master  git push -f 
+yuaming@yuaming-pc � ~/dev/workspace/rebase-test � � master � git push -f 
 ----
 
 * "11111", "33"으로 변경된 메세지를 확인할 수 있음
