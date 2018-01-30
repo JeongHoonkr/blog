@@ -3,7 +3,6 @@
 [source,swift]
 ----
 enum VehicleType : RawRepresentable {
-
     // 연산 프로퍼티
     struct Vehicle : Equatable {
         let name: String

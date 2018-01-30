@@ -29,7 +29,7 @@ func arithmeticMean(numbers: Double...) -> Double {
     return total / Double(numbers.count)
 }
 
-// inout -> 값으로 전달되는 매개변수를 참조로 전달되기 떄문에 원래 값이 변경됨
+// inout => 값으로 전달되는 매개변수를 참조로 전달되기 떄문에 원래 값이 변경됨
 func swapTwoInts( a: inout Int, b: inout Int) {
     let temporaryA = a
     a = b

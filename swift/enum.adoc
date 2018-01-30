@@ -88,7 +88,7 @@ dinner = MainDish2.pizza(dough: PizzaDough.cheeseCrust, topping: PizzaTopping.ba
 
 // 순환 열거형
 // 열거형 항목의 연관 값이 열거형 자신의 값이고자 할 때 사용함
-// indirect 제거할 경우, 컴파일 오류 발생 -> Recursive enum 'ArithmeticExpression' is not marked 'indirect'
+// indirect 제거할 경우, 컴파일 오류 발생 => Recursive enum 'ArithmeticExpression' is not marked 'indirect'
 indirect enum ArithmeticExpression {
     case number(Int)
     case addition(ArithmeticExpression, ArithmeticExpression)
@@ -100,7 +100,7 @@ let four = ArithmeticExpression.number(4)
 let sum = ArithmeticExpression.addition(five, four)
 let final = ArithmeticExpression.multiplication(sum, ArithmeticExpression.number(2))
 
-func evaluate(_ expression: ArithmeticExpression) -> Int {
+func evaluate(_ expression: ArithmeticExpression) => Int {
     switch expression {
     case .number(let value):
         return value

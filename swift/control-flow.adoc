@@ -33,7 +33,7 @@ default:
     print("\(someChar) is a consonant")
 }
 
-// 범위 확인
+// 범위확인
 let count = 3_000_000_000_000
 let countedThings = "stars"
 
@@ -80,7 +80,7 @@ default:
     break
 }
 
-// fallthrough -> 다음 조건문을 실행함
+// fallthrough => 다음 조건문을 실행함
 switch anotherPoint {
 case let (x, y) where x == y:
     print("x = y")

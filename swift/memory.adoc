@@ -7,13 +7,14 @@
 [source,swift]
 ----
 let origin = CGPoint(x: 0, y: 0)
-// let orgin = CGPoint.init(x: 0, y: 0)과 같음
-var other = origin
-other.x += 10
-// Call By Value -> 값이 복사됨
 
-// origin -> (0, 0)
-// other -> (10, 0)
+var other = origin
+
+// Call By Value => 값이 복사됨
+other.x += 10
+
+// origin => (0, 0)
+// other => (10, 0)
 // Value semantics
 ----
 
@@ -25,18 +26,18 @@ var myMilk = ChocoMilk()
 myMilk.amount 300
 
 var yourMilk = myMilk
+
+// Call By Reference => 값이 복사되는 형태가 아니라 새로운 참조가 생김
 yourMilk.amount = 300
-// Call By Reference -> 값이 복사되는 형태가 아니라 새로운 참조가 생김
 
-myMilk, yourMilk -> amount -> 100
-
+// myMilk, yourMilk => amount => 100
 print(myMilk.amount)
 ----
 
 ===== Value Types Reference
 * `inout`
-** Objective-C의 호환 때문에 주로 쓰이지만, 권장하지 않는 방법
-* Value Type을 여러 번 복사할 때, 경우에 따라서 공통적인 클래스를 하나 만들어서 참조하는 것이 나을 때가 있음
+** Objective-C의 호환 때문에 주로 쓰이지만 권장하지 않는 방법
+* Value Type를 여러 번 복사할 때 경우에 따라서 공통적인 클래스를 하나 만들어서 참조하는 것이 나을 때가 있음
 
 === OS Process Memory Model
 
@@ -45,19 +46,19 @@ print(myMilk.amount)
 
 ===== BSS, GVAR
 * 전역변수
-* 예를 들어 print() 함수코드가 Text에 있음. 함수코드가 호출이 되면 Stack에 매개변수와 리턴타입이 차례대로 쌓이다가 호출된 후 차례대로 지워짐
+* 예를 들어 print() 함수코드가 Text에 있음. 함수코드가 호출되면 Stack에 매개변수와 리턴타입이 차례대로 쌓이다가 호출된 후 차례대로 지워짐
 
 ===== Stack 
+* Value Type 인스턴스
 * 함수호출
 * 내부변수(상수)
-* Value Type 인스턴스
 
 ===== Heap 
 * Class 인스턴스
 * 참조할 때 해당 메모리 주소에 화살표가 생긴다고 생각하면 됨
-* Stack이 위에서 아래로 쌓이고 Heap이 아래에서 위로 쌓임. 더이상 쌓일 수 없을 때 오버플로우가 발생함
+* Stack이 위에서 아래로 쌓이고 Heap이 아래에서 위로 쌓임. 더 쌓일 수 없을 때 오버플로가 발생함
 
-image::../swift/image/os-process-memory-model.png[Memory Model]
+image::../swift/image/os-process-memory-model.png[]
 
 === Identity vs Equality
 
@@ -65,7 +66,7 @@ image::../swift/image/os-process-memory-model.png[Memory Model]
 * 메모리 영역이 같은 경우 Identity가 같다고 함
 
 ===== Equality
-* 메모리 영역은 다르지만, 값이 같은 경우 Equality가 같다고 함
+* 메모리 영역은 다르지만 값이 같은 경우 Equality가 같다고 함
 
 ===== 객체(인스턴스)를 비교한다는 것
 * 같은 클래스인가 ?
@@ -78,28 +79,30 @@ image::../swift/image/os-process-memory-model.png[Memory Model]
 
 === iOS Memory
 * 시스템 메모리가 30-40%를 사용하고 있음
-* 가상메모리는 500MB이하 사용하는 것이 좋음
+* 가상메모리는 500MB 이하 사용하는 것이 좋음
 * Warning 
 ** 메모리 해제
 ** 메모리 해제해도 메모리가 부족하면 백그라운드 앱 종료
-** 백그라운드 앱 종료해도 메모리가 부족하면 사용중인 강제 종료함
-* Runtime에서 레퍼런스 카운드가 0이 되면 객체가 소멸함
-** 객체 생성(init)과 소멸(deinit) 사이에서 생성시점, 소멸시점이 중요함
+** 백그라운드 앱 종료해도 메모리가 부족하면 사용 중인 강제 종료함
+* Runtime에서 레퍼런스 카운트가 0이 되면 객체가 소멸함
+** 객체 생성(init)과 소멸(deinit) 사이에서 생성 시점, 소멸 시점이 중요함
 
 === Manual Reference Count
 * 자동차 운전과 비슷함. 수동을 알고 있으면 자동에 대해 커버가 되지만 자동만 알면 수동을 모름
     
 === Auto Reference Count
-* 자동으로 메모리 관리함
+* 자동 메모리 관리함
 
 ===== strong 변수
 * 모든 객체 포인터 변수는 `strong` 변수(기본값)
 ** 자동으로 retain 처리됨
 ** 자동으로 레퍼런스 카운트가 1인 상태로 작동한다고 생각하면 됨
-** 이전 객체는 대입할 때 릴리스됨
-** strong 변수는 초기값을 0으로 설정됨
+** 이전 객체는 대입할 때 해제됨
+** strong 변수는 초깃값을 0으로 설정됨
 
 ===== 강한 참조
+* Class Robot 생성하는 시점과 소멸 시점을 명확하게 관리할 수 있음
+* 소멸은 레퍼런스 카운트가 0일 때만 작동함
 
 [source, swift]
 ----
@@ -128,13 +131,10 @@ robot3 = robot1
 robot2 = nil
 robot3 = nil
 
-// Array 만듬 -> Array 안에 객체때문에 레퍼런스 카운트가 증가함 -> Array에서 removeAll로 요소를 제거해주는 동작해야 레퍼런스 카운트가 줄어듬
+// Array 만듦 => Array 안에 객체 때문에 레퍼런스 카운트가 증가함 => Array에서 removeAll로 요소를 제거해주는 동작 해야 레퍼런스 카운트가 줄어듦
 var workArray = [robot1] robot1 = nil
 workArray.removeAll()
 ----
-
-* class Robot 생성하는 시점과 소멸시점을 명확하게 관리할 수 있음
-* 소멸은 레퍼런스 카운트가 0일 때만 작동함
 
 ===== 강한 참조 순환문제
 
@@ -153,9 +153,8 @@ robot2 = nil
     
 image::../swift/image/strong.png[]
 
-
 ===== 약한 참조
-* 순환 참조 문제로 인해 `weak` 생김
+* 순환 참조 문제 때문에 `weak` 생김
 
 [source, swift]
 ----
@@ -199,7 +198,7 @@ image::../swift/image/weak.png[]
 ===== unowned 미소유 참조
 * `unowned` 을 사용하면 참조 카운트를 반영하지 않음
 * 객체가 사라져도 nil로 바뀌지 않고 항상 값이 있다고 가정함
-* class, class-protocol 관계에서만 사용 가능
+* Class, Class-Protocol 관계에서만 사용 가능함
 
 [source, swift]
 ----
@@ -215,6 +214,10 @@ class Customer {
     }
 }
 
+// 명확한 소유참조 관계일 때 예를 들어 고객과 신용카드 관계 => 상속 관계가 아닌 포함 관계
+// 고객이 탈퇴하면 신용카드 객체가 사라져야 함
+// unowned 쓰지 않으면 고객이 사라져도 신용카드 객체가 사라지지 않음
+
 class CreditCard {
     let number: UInt64
     unowned let customer: Customer
@@ -227,16 +230,10 @@ class CreditCard {
 var john : Customer? = Customer(name: "John Appleseed")
 john!.card = CreditCard(number: 1234_5678_9012_3456, customer: john!)
 john = nil
-
-// 명확한 소유참조 관계일 때, 예를 들어 고객과 신용카드 관계 -> 고객이 탈퇴하면 신용카드가 사라짐
-
-// unowned 쓰지 않으면 고객이 사라져도 신용카드 객체가 사라지지 않음
 ----
 
-* 상속관계가 아닌 포함관계
-
 ===== 클로저 강한 참조 순환
-* 클로저도 하나의 객체로 생각해야함
+* 클로저도 하나의 객체로 생각해야 함
 * 객체 안의 클로저가 self 값 캡처로 사용될 때 weak 또는 unowned 키워드를 사용함
 
 image::../swift/image/closure-strong-reference.png[]
@@ -290,8 +287,8 @@ lazy var someClosure: () -> String = {
 *** return
 ** weak, unowned
 *** nil
-* 강한 참조를 하고 있는 객체가 소멸되기 전 소유권을 임시 pool에게 이전하여 사용함
-* lazy 처리, for문에서 계속 객체를 만들거나 함수 처리가 끝나기 전에 다른 처리가 있을 때
+* 강한 참조를 하는 객체가 소멸하기 전 소유권을 임시 pool에게 이전하여 사용함
+* lazy 처리, for 문에서 계속 객체를 만들거나 함수 처리가 끝나기 전에 다른 처리가 있을 때 사용함
 
 [source, swift]
 ----
@@ -312,8 +309,12 @@ autoreleasepool { () -> () in
 * 읽기만 가능한 포인터
 
 ===== Buffer Pointers
-* Array -> Linked List -> 변경 작업이 편함
-* Buffer -> Continuous Array -> 읽고 쓰는 단순 작업하기 좋음 
+* Array 
+** Linked List 
+** 변경 작업이 편함
+* Buffer 
+** Continuous Array 
+** 읽고 쓰는 단순 작업하기 좋음 
 * 화면 픽셀정보, 미디어 버퍼링 정보
 
 ===== Null Pointers
@@ -340,5 +341,6 @@ a.moeny
 * *b
 ** b는 포인터 변수
 ** b = &a
-** print(b) -> pointer
-** print(*b) -> pointee -> b가 참조하고 있는 주소를 출력, 즉 a의 주소를 출력함
+** print(b) => pointer
+** print(*b) => pointee 
+*** b가 참조하고 있는 주소를 출력함. 즉 a의 주소를 출력함

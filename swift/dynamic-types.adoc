@@ -7,7 +7,7 @@
 var number = 5      // 값
 var string = "JK"
 
-type(of: number)    // Int.Type (MetaType -> 상위의 타입, 타입의 타입)
+type(of: number)    // Int.Type (MetaType => 상위의 타입, 타입의 타입)
 type(of: string)    // String.Type
 
 let SType: String.Type = String.self    // MetaType

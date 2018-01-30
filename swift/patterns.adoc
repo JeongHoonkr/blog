@@ -8,9 +8,9 @@
 * 조건절을 사용할 수 있는 경우
 * Bool 값으로 평가되는 표현식
 * *조건 리스트*
-** 하나 이상의 조건 패턴이 컴마로 연결된 것
+** 하나 이상의 조건 패턴이 콤마로 연결된 것
 ** 조건 패턴
-*** 호환성체크 패턴
+*** 호환성 체크 패턴
 *** 옵셔널 바인딩 패턴
 **** `if let -`
 *** case 조건 패턴 
@@ -21,7 +21,7 @@
 === 패턴
 
 ===== 패턴
-* 패턴 매칭 : 코드로 어떤 패턴을 찾도록 매칭하는 것
+* 패턴 매칭 => 코드로 어떤 패턴을 찾도록 매칭하는 것
 * 값을 추출하거나 무시하는 패턴
 ** 와일드 카드, 식별자, 값 바인딩, 튜플
 * 패턴 매칭을 위한 패턴
@@ -48,7 +48,7 @@ _ = bar(100)
 ----
 
 ===== 값 바인딩(Value-binding)
-* var, let으로 있는 값을 다시 바인딩함
+* var, let으로 값을 다시 바인딩함
 
 [source,swift]
 ----
@@ -113,8 +113,8 @@ for dish in dishes {
 ----
 
 ===== 옵셔널(Optional)
-* 옵셔널 패턴은 식별자뒤에 ?가 붙dma
-* nil이 아닌 옵셔널 값에 매칭
+* 옵셔널 패턴은 식별자 뒤에 ?가 붙음
+* nil이 아닌 옵셔널 값에 매칭함
 * 옵셔널 바인딩을 권장함
 
 [source, swift]
@@ -132,7 +132,7 @@ for case let number? in arrayOfOptionalInts {
 
 ===== 타입변환(Type-casting)
 * `is (type)`, `(pattern) as (type)`
-* 타입변환하거나 매치
+* 타입변환 하거나 매치
 
 [source,swift]
 ----
@@ -147,8 +147,8 @@ default: print("Int도 아니고 String도 아니네!")
 
 ===== 표현(Expression)
 * `~=` 연산자를 통해 매칭을 검증함
-* 오버라이드 : 상속, 재정의
-* 오버로드 : 덮어씌움
+* 오버라이드 => 상속, 재정의
+* 오버로드 => 덮어씌움
 
 [source,swift]
 ----
@@ -225,6 +225,3 @@ Int(10).printByMyself()
 String("hello").printByMyself()
 Person().printByMyself()
 ----
-
-=== 참고
-* https://soooprmx.com/archives/6251[Swift의 조건절 패턴 매칭 총정리]

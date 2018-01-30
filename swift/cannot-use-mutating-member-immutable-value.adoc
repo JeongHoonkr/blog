@@ -22,5 +22,5 @@ let jsonData = try jsonScanner.makeValues(value).map({ (s: String) -> JSONData i
 ----
 
 ===== 정리
-* Mutable Data, Immutable Data 분리하도록 컴파일에서 에러 발생시킴
+* Mutable Data, Immutable Data를 분리하도록 컴파일에서 에러 발생시킴
 
