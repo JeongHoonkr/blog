@@ -247,4 +247,4 @@ PhoneNumber phoneString;
 * 애플 문서나 다른 사람들의 코드를 보고 이름을 어떻게 짓는지 확인해보자
 * _생성자를 중복 정의 할 때 정적 팩토리 메서드를 사용함_ 은 무슨 의미인가 ?
 ** 클래스의 인스턴스(instance)를 생성하도록 하는 일반적인 방법은 public 생성자(constructor)을 제공하는 것
-** https://rangken.gitbooks.io/javastudy/content/chapter2/item1.html[Effective Java - 기본 생성자보다 Static 팩토리 메소드를 만들어라]
+** https://rangken.gitbooks.io/javastudy/content/chapter2/item1.html[Effective Java - 기본 생성자보다 Static 팩토리 메서드를 만들어라]
