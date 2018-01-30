@@ -10,8 +10,7 @@ $ xcrun: error: invalid active developer path (/Library/Developer/CommandLineToo
 ----
 
 ===== 해결
-
-* xcode 전체 업데이트 및 Command Line Tools만 업데이트
+* XCode 전체 업데이트하거나 Command Line Tools만 업데이트함
 
 [source, shell]
 ----

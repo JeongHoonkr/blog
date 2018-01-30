@@ -54,7 +54,7 @@
 ** link:java/java-8-lambda.adoc[Java8 Lambda]
 * link:mac/README.adoc[MacOS]
 ** link:mac/os-x-update-git-error.adoc[OS-X 업데이트 후, Git 등 오류 발생]
-** link:mac/the-gitHub-credentials-in-the-macOS-keychain-may-be-invalid.adoc[The GitHub credentials in the macOS keychain may be invalid]
+** link:mac/the-github-credentials-in-the-macOS-keychain-may-be-invalid.adoc[The GitHub credentials in the macOS keychain may be invalid]
 ** link:mac/zsh-history-clear.adoc[ZSH Command 내역 지우기]
 * link:oop/README.adoc[Object-Oriented Programming]
 ** link:oop/di.adoc[DI]
