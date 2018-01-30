@@ -37,12 +37,12 @@ image::../oop/image/class-instance.png[클래스, 인스턴스]
 
 ==== 구조체, 클래스
 
-===== 구조체 -> 데이터 추상화 -> 결론적으로 **관련 데이터를 한꺼번에 모아놓기 위한 것**
+===== 구조체 => 데이터 추상화 => 결론적으로 **관련 데이터를 한꺼번에 모아놓기 위한 것**
 * 값을 저장하기 위한 _프로퍼티, 멤버변수_ 선언
 * 기능을 제공하기 위한 _메서드_ 선언
 * 서브스크립트로 접근할 수 있는 문법 지원
 * 초기 상태를 위한 초기화 메서드 제공
-* Milk -> 추상화, 일반화를 통해 코드로 표현
+* Milk => 추상화, 일반화를 통해 코드로 표현
 * 수학적으로 https://gamecodingschool.org/2008/04/03/%EC%B9%B4%ED%85%8C%EA%B3%A0%EB%A6%AC-%EC%9D%B4%EB%A1%A0category-theory/[카테고리 이론], https://gamecodingschool.org/tag/%ED%83%80%EC%9E%85-%EC%8B%9C%EC%8A%A4%ED%85%9C/[타입 이론]이 존재함
 
 [source, swift]
@@ -128,31 +128,31 @@ let chocoMilk1 = Milk(brand: "서울우유", amount: 150, title: "에너지초�
 [source, swift]
 ----
 class Milk {
-var brand : String
-var amount : Int
-var title : String
-var type : MilkType
+    var brand : String
+    var amount : Int
+    var title : String
+    var type : MilkType
 
-init() {
-brand = ""
-amount = 0
-title = ""
-type = .unknown
-}
+    init() {
+        brand = ""
+        amount = 0
+        title = ""
+        type = .unknown
+    }
 }
 
 class ChocoMilk : Milk {
-override init() {
-super.init()
-type = .energyChoco
-}
+    override init() {
+        super.init()
+        type = .energyChoco
+    }
 }
 
 class BananaMilk : Milk {
-override init() {
-super.init()
-type = .banana
-}
+    override init() {
+        super.init()
+        type = .banana
+    }
 }
 
 let bananaMilk1 = BananaMilk()
@@ -168,24 +168,24 @@ image::../oop/image/class-polymorphism.png[클래스 다형성]
 [source, swift]
 ----
 class Animal {
-func speak() {
-print("animal speak...")
-}
+    func speak() {
+    print("animal speak...")
+    }
 }
 
 var animal = Animal()
 animal.speak()
 
 class Dog : Animal {
-override func speak() {
-print("dog - bow-wow")
-}
+    override func speak() {
+        print("dog - bow-wow")
+    }
 }
 
 class Cat : Animal {
-override func speak() {
-print("cat - meow")
-}
+    override func speak() {
+        print("cat - meow")
+    }
 }
 
 var dog = Dog()
@@ -197,7 +197,7 @@ cat.speak()
 // swtich-case 문으로 타입을 확인하고 as 연산자로 타입캐스팅 할 필요가 없음
 var animalArray : [Animal] = [animal, dog, cat]
 for x in animalArray {
-x.speak() 
+    x.speak() 
 }
 ----
 
@@ -208,24 +208,24 @@ image::../oop/image/struct-polymorphism.png[구조체 다형성]
 [source, swift]
 ----
 protocol AnimalProtocol {
-func speak()
+    func speak()
 }
 
 struct Animal: AnimalProtocol {
-func speak() {
-print("animal speak")
-}
+    func speak() {
+        print("animal speak")
+    }
 }
 
 var animal = Animal()
 animal.speak()
 
 struct Dog : AnimalProtocol {
-func speak() { print("dog - bow-wow") }
+    func speak() { print("dog - bow-wow") }
 }
 
 struct Cat : AnimalProtocol {
-func speak() { print("cat - meow-meow") }
+    func speak() { print("cat - meow-meow") }
 }
 
 var dog = Dog()
@@ -259,26 +259,26 @@ x.speak()
 ----
 // before
 struct InputView {
-func readInput() {
-print("실행 좌표를 입력하세요.")
-let userCoordinate = readLine()
-guard let input = userCoordinate else { return }
-print(seperateCoordinates(userInput: input))
-}
+    func readInput() {
+        print("실행 좌표를 입력하세요.")
+        let userCoordinate = readLine()
+        guard let input = userCoordinate else { return }
+        print(seperateCoordinates(userInput: input))    
+    }
 
-// ...
+    // ...
 }
 
 // after
 struct InputView {
-func readInput() -> String {
-print("좌표를 입력하세요.")
-let userCoordinate = readLine()
-guard let input = userCoordinate else { return "" }
-return input
-}
+    func readInput() -> String {
+        print("좌표를 입력하세요.")
+        let userCoordinate = readLine()
+        guard let input = userCoordinate else { return "" }
+        return input
+    }
 
-// ...
+    // ...
 }
 ----
 
@@ -296,26 +296,26 @@ return input
 [source, swift]
 ----
 class MessageListViewController: UITableViewController {
-private let loader: MessageLoader
+    private let loader: MessageLoader
 
-// 객체가 가지는 의존성을 외부에서 주입하면
-// 의존성 여부가 명확해지고
-// 단위 테스트하기 편함
-// 의존하는 객체 타입 대신 프로토콜을 채택한 객체를 넘겨줌
-// 싱글톤 객체인 경우, 싱글톤을 대체할 수 없음 -> 싱글톤 객체를 대체할 수 있는 프로토콜을 정의할 수 있으면 좋음
-// 하나의 인터페이스가 커지면 분리하는 것이 좋음 -> 인터페이스 분리의 원칙
-init(loader: MessageLoader) {
-self.loader = loader
-super.init(nibName: nil, bundle: nil)
-}
+    // 객체가 가지는 의존성을 외부에서 주입하면
+    // 의존성 여부가 명확해지고
+    // 단위 테스트하기 편함
+    // 의존하는 객체 타입 대신 프로토콜을 채택한 객체를 넘겨줌
+    // 싱글톤 객체인 경우, 싱글톤을 대체할 수 없음 => 싱글톤 객체를 대체할 수 있는 프로토콜을 정의할 수 있으면 좋음
+    // 하나의 인터페이스가 커지면 분리하는 것이 좋음 => 인터페이스 분리의 원칙
+    init(loader: MessageLoader) {
+        self.loader = loader
+        super.init(nibName: nil, bundle: nil)
+    }
 
-override func viewWillAppear(_ animated: Bool) {
-super.viewWillAppear(animated)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
 
-loader.load { [weak self] messages in
-self?.reloadTableView(with: messages)
-}
-}
+        loader.load { [weak self] messages in
+            self?.reloadTableView(with: messages)
+        }
+    }
 }
 ----
 
