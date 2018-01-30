@@ -1,13 +1,11 @@
 = Human Interface Guideline
 
-=== Human Interface Guideline
-
-=== 추가 설명
-* 맥킨토시 시절 => HCI
-** `Drop and Drag` 는 문서를 잡고(= Drag) 휴지통에 넣는(= Drop) 실제 행동에서 반영이 됨
-** `Copy and Paste` 는 문서를 복사하고(= Copy) 보드 붙이는(= Paste) 실제 행동에서 반영이 됨
+=== 추가 정리
+* 매킨토시 시절 => HCI
+** `Drop and Drag` 는 문서를 잡고(= Drag) 휴지통에 넣는(= Drop) 실제 행동에서 반영됨
+** `Copy and Paste` 는 문서를 복사하고(= Copy) 보드 붙이는(= Paste) 실제 행동에서 반영됨
 ** 실제 행동을 많이 반영함
 * Mobile iOS, Mac OSX 버전 있음
-* 버전 업그레이드가 되서 애플 문서가 바뀐다면 애플 기본 앱 효과, UI 등 분석해봄
+* 버전 업그레이드가 돼서 애플 문서가 바뀐다면 애플 기본 앱 효과, UI 등 분석해봄
 ** 사진 앱이 복잡함
 ** 혼자 공부한다면 애플 기본 앱을 만들어 봄
