@@ -39,7 +39,7 @@
 *** link:daily/201801/20180122-20180128.adoc[20180122 - 20180128]
 *** link:daily/201801/20180129-20180204.adoc[20180129 - 20180204]
 * link:fp/README.adoc[Functional Programming]
-** link:fp/why-use-functional-programming-language.adoc[함수형 언어를 배워야 하는 이유?]
+** link:fp/why-use-functional-programming-language.adoc[객체지향 언어가 대세지만 최근에 함수형 패러다임을 가져와서 사용하는 이유?]
 ** link:fp/functional-programming-js.adoc[Functional Programming with JS]
 ** link:fp/functional-programming-scala.adoc[Functional Programming with Scala]
 ** link:fp/functor-monad.adoc[Functor, Monad]
