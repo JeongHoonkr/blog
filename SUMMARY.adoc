@@ -8,8 +8,8 @@
 == CONTENT
 
 * link:algorithm/README.adoc[Algorithm]
-** link:algorithm/big-o.adoc[Big O Notation]
-** link:algorithm/recursion.adoc[Recursion]
+** link:algorithm/big-o.adoc[복잡도분석]
+** link:algorithm/recursion.adoc[순환]
 // * link:aws/README.adoc[AWS]
 // ** link:aws/aws.adoc[기본]
 * link:books/README.adoc[Books]
@@ -39,8 +39,8 @@
 *** link:daily/201801/20180129-20180204.adoc[20180129 - 20180204]
 * link:fp/README.adoc[Functional Programming]
 ** link:fp/why-use-functional-programming-language.adoc[객체지향 언어가 대세지만 최근에 함수형 패러다임을 가져와서 사용하는 이유?]
-** link:fp/functional-programming-js.adoc[Functional Programming with JS]
-** link:fp/functional-programming-scala.adoc[Functional Programming with Scala]
+** link:fp/functional-programming-js.adoc[자바스크립트로 알아보는 함수형 프로그래밍]
+** link:fp/functional-programming-scala.adoc[함수형 프로그래밍]
 ** link:fp/functor-monad.adoc[Functor, Monad]
 * link:git/README.adoc[Git]
 ** link:git/git.adoc[기본]
