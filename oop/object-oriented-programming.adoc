@@ -1,4 +1,4 @@
-= 객체 지향 프로그래밍(Object-Oriented Programming)
+= 객체 지향 프로그래밍(Object-Oriented Programming with Swift)
 
 === 객체 지향 프로그래밍
 * 객체
@@ -49,15 +49,15 @@ image::../oop/image/class-instance.png[클래스, 인스턴스]
 ----
 // 우유 객체 구조체
 enum MilkType {
-case Blueberry
-case Banana
-case EnergyChoco
+    case Blueberry
+    case Banana
+    case EnergyChoco
 }
 struct Milk {
-let brand : String
-let amount : Int
-let title : String
-let type : MilkType
+    let brand : String
+    let amount : Int
+    let title : String
+    let type : MilkType
 }
 
 // 우유 객체 인스턴스
